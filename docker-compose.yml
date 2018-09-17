@@ -1,0 +1,19 @@
+version: "3"
+services:
+  backend:
+    build: ./backend/
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./frontend/dist:/app
+      - ./nginx.conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+  db:
+    image: mongo:4.1-xenial
+    volumes:
+      - ./db:/data/db
